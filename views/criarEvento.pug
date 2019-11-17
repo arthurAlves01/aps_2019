@@ -1,0 +1,25 @@
+extends layouts/master.pug
+block contentSrc
+
+block content
+    h3 Crie seu evento!
+    form(method="POST" action="/validaLogin" onsubmit="return false")
+        div(class="form-group")
+            label(for="nomeEvento") Nome do Evento
+            input(type="text" class="form-control" id="nomeEvento" name="nomeEvento" aria-describedby="emailHelp" placeholder="Nome do evento")
+        div(class="form-group")
+            label(for="bairro") Bairro
+            input(type="text" class="form-control" id="bairro" name="bairro" aria-describedby="emailHelp" placeholder="Informe o nome completo")
+        div(class="form-group")
+            label(for="cidade") Cidade
+            input(type="text" class="form-control" id="cidade" name="cidade" aria-describedby="emailHelp" placeholder="Informe o nome completo")
+        div(class="form-group")
+            label(for="endereco") Endereço
+            input(type="text" class="form-control" id="endereco" name="endereco" aria-describedby="emailHelp" placeholder="Informe o nome completo")
+        div(class="form-group")
+            label(for="dtEvento") Data do evento
+            input(type="date" class="form-control" id="dtEvento" name="dtEvento" aria-describedby="emailHelp" placeholder="Informe o nome completo")
+        button(type="submit" class="btn btn-primary" onclick="validaDadosEvento(this.parentNode)") Enviar
+            
+block contentJs
+    script(src="/scripts/validaForm.js")

@@ -39,6 +39,10 @@ app.get("/confirmaCadastro", (req,res) => {
 	res.render("confirmaCadastro")
 })
 
+app.get("/acessoNegado", (req,res) => {
+	res.render("acessoNegado")
+})
+
 app.post("/cadastraUsuario", (req,res) => {
 	request.post('http://localhost:81/cadastrar', {
 		json: {
@@ -73,7 +77,6 @@ app.post("/validaLogin", (req,res) => {
 			res.redirect("/erro")
 			return
 		}
-		console.log(body)
 		req.session.loggedin = true
 		req.session.username = body.nome_completo
 		res.redirect("/")
@@ -88,8 +91,22 @@ app.get(["/","/*"], (req,res,next) => {
     }
 })
 
+app.get("/criarEvento", (req,res) => {
+	res.render("criarEvento", {user: req.session.username, logado: req.session.loggedin})
+})
+
 app.get("/", (req,res) => {
-	res.render("feed", {user: req.session.username})
+	res.render("feed", {user: req.session.username, logado: req.session.loggedin})
+})
+
+app.get("/sair", (req,res) => {
+    req.session.destroy(() => {
+		res.redirect("/home/login")
+	})
+})
+
+app.get("/*", (req,res) => {
+	res.render("404", {logado: req.session.loggedin})
 })
 
 app.listen(80, function () {

@@ -29,3 +29,16 @@ function validaDadosLogin(f) {
     }
     f.submit()
 }
+
+function validaDadosEvento(f) {
+    let nomeEvento = $("#nomeEvento").val();
+    let bairro = $("#bairro").val();
+    let cidade = $("#cidade").val();
+    let endereco = $("#endereco").val();
+    let dataEv = $("#dtEvento").val();
+    if([nomeEvento,bairro,cidade,endereco,dataEv].indexOf("")!=-1) {
+        alert("Todos os campos são obrigatórios")
+        return
+    }
+    f.submit()
+}
