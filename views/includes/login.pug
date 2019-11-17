@@ -1,0 +1,9 @@
+h3 Faça login!
+form(method="POST" action="/validaLogin" onsubmit="return false")
+    div(class="form-group")
+        label(for="nomeUsuario") Nome de Usuário
+        input(type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" aria-describedby="emailHelp" placeholder="Informe o nome de usuário")
+    div(class="form-group")
+        label(for="senha") Senha
+        input(type="password" class="form-control" id="senha" name="senha" aria-describedby="emailHelp" placeholder="Informe o nome completo")
+    button(type="submit" class="btn btn-primary" onclick="validaDadosLogin(this.parentNode)") Enviar

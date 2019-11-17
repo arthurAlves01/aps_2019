@@ -18,6 +18,8 @@
   "homepage": "https://github.com/arthurAlves01/aps_2019#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "pug": "^2.0.4",
     "request": "^2.88.0",
     "sqlite3": "^4.1.0"

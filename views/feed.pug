@@ -1,0 +1,14 @@
+extends layouts/master.pug
+block contentSrc
+
+block content
+    h2 Bem vindo #{user}!
+    h4 Eventos recentes:
+    div(class="list-group")
+        a(href="#" class="list-group-item list-group-item-action flex-column align-items-start")
+            div(class="d-flex w-100 justify-content-between")
+                h5(class="mb-1") List group item heading
+                small 3 days ago
+            p(class="mb-1") Descrição do evento
+block contentJs
+    script(src="/scripts/validaForm.js")

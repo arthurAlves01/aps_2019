@@ -1,0 +1,24 @@
+h3 Faça o seu cadastro!
+form(method="POST" action="/cadastraUsuario" onsubmit="return false")
+    div(class="form-group")
+        label(for="nomeUsuario") Nome de Usuário
+        input(type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" aria-describedby="emailHelp" placeholder="Informe o nome de usuário")
+    div(class="form-group")
+        label(for="nomeCompleto") Nome Completo
+        input(type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" aria-describedby="emailHelp" placeholder="Informe o nome completo")
+    div(class="form-group")
+        label(for="emailAdd") Endereço de E-mail
+        input(type="email" class="form-control" id="emailAdd" name="emailAdd" aria-describedby="emailHelp" placeholder="Informe o e-mail")
+    div(class="form-group")
+        label(for="bairro") Bairro
+        input(type="text" class="form-control" id="bairro" name="bairro" aria-describedby="emailHelp" placeholder="Informe o bairro")
+    div(class="form-group")
+        label(for="cidade") Cidade
+        input(type="text" class="form-control" id="cidade" name="cidade" aria-describedby="emailHelp" placeholder="Informe o cidade")        
+    div(class="form-group")
+        label(for="senha") Senha
+        input(type="password" class="form-control" id="senha" name="senha" placeholder="Informe a senha")
+    div(class="form-group")
+        label(for="confirmaSenha") Confirme a Senha
+        input(type="password" class="form-control" id="confirmaSenha" name="confirmaSenha" placeholder="Informe a senha novamente")
+    button(type="submit" class="btn btn-primary" onclick="validaDadosCadastro(this.parentNode)") Enviar

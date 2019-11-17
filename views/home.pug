@@ -1,0 +1,13 @@
+extends layouts/master.pug
+block contentSrc
+
+block content
+    if logado
+        include includes/feed.pug
+    else if cadastro
+        include includes/cadastro.pug
+    else
+        include includes/login.pug
+
+block contentJs
+    script(src="/scripts/validaForm.js")
