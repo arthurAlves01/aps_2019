@@ -56,7 +56,7 @@ app.post("/cadastraUsuario", (req,res) => {
 	}, (error, httpRes, body) => {
 		if (httpRes.statusCode!==200) {
 			console.error(error)
-			res.redirect("usuarioExiste")
+			res.redirect("/usuarioExiste")
 			return
 		}
 		res.redirect("/confirmaCadastro")
@@ -79,6 +79,7 @@ app.post("/validaLogin", (req,res) => {
 		}
 		req.session.loggedin = true
 		req.session.username = body.nome_completo
+		req.session.id_usuario = body.id_usuario
 		res.redirect("/")
 	})
 })
@@ -91,14 +92,54 @@ app.get(["/","/*"], (req,res,next) => {
     }
 })
 
-app.get("/criarEvento", (req,res) => {
-	res.render("criarEvento", {user: req.session.username, logado: req.session.loggedin})
+app.get("/formCriaEvento", (req,res) => {
+	res.render("formCriaEvento", {user: req.session.username, logado: req.session.loggedin})
 })
 
+app.post("/criarEvento", (req,res) => {
+	request.post('http://localhost:81/criarEvento', {
+		json: {
+			nomeEvento: req.body.nomeEvento,
+			bairro: req.body.bairro,
+			cidade: req.body.cidade,
+			endereco: req.body.endereco,
+			dtEvento: req.body.dtEvento,
+			criadoPor: req.session.id_usuario
+		}
+	}, (error, httpRes, body) => {
+		if (httpRes.statusCode!==200) {
+			res.redirect("/erroCriarEvento")
+			return
+		}
+		res.redirect("/eventoCriado")
+	})
+})
+app.get("/erroCriarEvento", (req,res) => {
+	res.render("erroCriarEvento", {user: req.session.username, logado: req.session.loggedin})
+})
+app.get("/eventoCriado", (req,res) => {
+	res.render("eventoCriado", {user: req.session.username, logado: req.session.loggedin})
+})
+app.get("/erroBuscarEventos", (req,res) => {
+	res.render("erroBuscarEventos", {user: req.session.username, logado: req.session.loggedin})
+})
+app.get("/meusEventos", (req,res) => {
+	request.get('http://localhost:81/buscarEventos', {
+		json: {
+			usuario: req.session.id_usuario
+		}
+	}, (error, httpRes, body) => {
+		if (httpRes.statusCode!==200) {
+			res.redirect("/erroBuscarEventos")
+			return
+		}
+		res.render("meusEventos", {user: req.session.username, logado: req.session.loggedin, eventos: body.eventos})
+	})
+	
+})
 app.get("/", (req,res) => {
 	res.render("feed", {user: req.session.username, logado: req.session.loggedin})
 })
-
 app.get("/sair", (req,res) => {
     req.session.destroy(() => {
 		res.redirect("/home/login")

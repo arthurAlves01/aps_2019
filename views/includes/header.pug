@@ -1,7 +1,7 @@
 div(class="container")
     nav(class="navbar navbar-light bg-light navbar-expand-lg")
-        a(class="navbar-brand" id="facegreen-logo" href="#") 
-            img(src="/img/leaf.png" width="40")
+        a(class="navbar-brand" id="facegreen-logo" href="/") 
+            img(src="/img/leaf.png" width="40" )
             | FaceGreen
         if !logado
             div(class="navbar" id="navbarNavAltMarkup")
@@ -19,5 +19,13 @@ div(class="container")
                         span(class="sr-only") (current)
             div(class="navbar" id="navbarNavAltMarkup")
                 div(class="navbar-nav")
-                    a(class="nav-item nav-link active" href="/criarEvento") Criar Evento 
+                    a(class="nav-item nav-link active" href="/") Eventos
+                        span(class="sr-only") (current)
+            div(class="navbar" id="navbarNavAltMarkup")
+                div(class="navbar-nav")
+                    a(class="nav-item nav-link active" href="/formCriaEvento") Criar Evento 
+                        span(class="sr-only") (current)
+            div(class="navbar" id="navbarNavAltMarkup")
+                div(class="navbar-nav")
+                    a(class="nav-item nav-link active" href="/meusEventos") Meus Eventos
                         span(class="sr-only") (current)

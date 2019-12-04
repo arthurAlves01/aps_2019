@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.post("/cadastrar", (req,res) => {
     let u = req.body.nomeUsuario;
     let s = getSha256(u.substr(0,3) + req.body.senha);
-    let sqlValida = "SELECT id FROM usuarios WHERE nome_exibicao = ? and senha = ?"
+    let sqlValida = "SELECT ID_USUARIO FROM usuarios WHERE nome_exibicao = ? and senha = ?"
     let stm = db.prepare(sqlValida);
     stm.get([u,s], (err, row) => {
         if(err) {
@@ -58,7 +58,7 @@ app.post("/login", (req,res) => {
     let u = req.body.nomeUsuario;
     let s = req.body.senha;
     s = getSha256(u.substr(0,3) + req.body.senha);
-    let sqlLogin = "SELECT NOME_COMPLETO FROM USUARIOS WHERE NOME_EXIBICAO = ? AND SENHA = ?"
+    let sqlLogin = "SELECT NOME_COMPLETO, ID_USUARIO FROM USUARIOS WHERE NOME_EXIBICAO = ? AND SENHA = ?"
     let stm = db.prepare(sqlLogin);
     stm.get([u,s], (err,row) => {
         if(err) {
@@ -69,6 +69,43 @@ app.post("/login", (req,res) => {
         } else {
             console.log("Autenticado com sucesso!")
             res.status(200).json(row)
+        }
+    })
+})
+
+app.post("/criarEvento", (req,res) => {
+    let nomeEvento, bairro, cidade, endereco, dtEvento, criadoPor;
+    nomeEvento = req.body.nomeEvento;
+    bairro = req.body.bairro;
+    cidade = req.body.cidade;
+    endereco = req.body.endereco;
+    dtEvento = req.body.dtEvento;
+    criadoPor = req.body.criadoPor;
+    dataCriacao = + new Date();
+    let sqlCriaEvento = "INSERT INTO EVENTOS(NOME_DO_EVENTO, BAIRRO_EVENTO, CIDADE_EVENTO, ENDERECO_EVENTO, DATA_CRIACAO, DATA_EVENTO, STATUS_EVENTO, CRIADO_POR) VALUES(?,?,?,?,?,?,?,?)"
+    let stm = db.prepare(sqlCriaEvento);
+    stm.run([nomeEvento,bairro,cidade,endereco,dataCriacao,dtEvento,"Ativo",criadoPor], (err) => {
+        if(err) {
+            res.status(500).end()
+        } else {
+            console.log("Evento criado com sucesso!")
+            res.status(200).json({status: true})
+        }
+    })
+})
+
+app.get("/buscarEventos", (req,res) => {
+    let usuario = req.body.usuario;
+    let sqlBuscaEventos = "SELECT * FROM EVENTOS WHERE CRIADO_POR = ?";
+    let stm = db.prepare(sqlBuscaEventos);
+    stm.all([usuario], (err, rows) => {
+        if(err) {
+            res.status(500).end()
+        } else {
+            console.log("Listando eventos!")
+            console.log(rows)
+            if(rows.length==0) rows = false;
+            res.status(200).json({eventos: rows})
         }
     })
 })

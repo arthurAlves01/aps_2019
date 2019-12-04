@@ -1,0 +1,22 @@
+extends layouts/master.pug
+block contentSrc
+
+block content
+    h3 Seus Eventos:
+    if !eventos
+        h5 Você não possui nenhum evento criado!
+        a(href="/criarEvento") Clique para criar um evento!
+    else
+        each evento in eventos
+            - var ev = "evento_" + evento.id_evento
+            div(class="list-group" id=ev)
+                a(href="#" class="list-group-item list-group-item-action flex-column align-items-start")
+                    div(class="d-flex w-100 justify-content-between")
+                        h5(class="mb-1") #{evento.nome_do_evento}
+                        small #{evento.data_evento}
+                    p(class="mb-1") #{evento.endereco_evento}
+                button(class="btn btn-danger" onclick="deleteEvento(this.parentNode)") Excluir evento!
+            br
+block contentJs
+    script(src="/scripts/validaForm.js")
+    script(src="/scripts/telaEventos.js")
